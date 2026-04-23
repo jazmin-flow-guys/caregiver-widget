@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frame 270</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #f8f4f1;
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Scale wrapper: design lives at 800×519, JS scales it to fit */
+#scaler {
+  width: 800px;
+  height: 519px;
+  transform-origin: top left;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes expandX {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes badgePop {
+  0%   { opacity: 0; transform: scale(0.7); }
+  65%  { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes rowFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.frame-270 {
+  background: #f8f4f1;
+  width: 800px;
+  height: 519px;
+  padding: 27.7px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inner-layout {
+  display: flex;
+  gap: 23px;
+  height: 100%;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: #fff;
+  border-radius: 9px;
+  padding: 18.5px;
+  width: 184.7px;
+  min-width: 184.7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 9.2px;
+  padding-bottom: 13.9px;
+  border-bottom: 0.58px solid rgba(87,105,177,0.2);
+  margin-bottom: 13.9px;
+  animation: fadeInUp 0.45s ease 0.25s both;
+}
+.brand-icon {
+  width: 18.5px; height: 18.5px;
+  background: #5769b1;
+  border-radius: 57px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.brand-icon img { width: 10.4px; height: 10.4px; display: block; }
+.brand-name { font-size: 10.4px; font-weight: 700; color: #333; letter-spacing: -0.01em; }
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 9.2px;
+  margin-bottom: 37px;
+  animation: fadeInUp 0.45s ease 0.35s both;
+}
+.avatar {
+  width: 23.1px; height: 23.1px;
+  border-radius: 48px;
+  background: rgba(87,105,177,0.1);
+  border: 0.48px solid rgba(87,105,177,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7.7px; font-weight: 700; color: #333;
+  flex-shrink: 0;
+}
+.user-name { font-size: 9.2px; font-weight: 500; color: #333; line-height: 1.4; }
+.user-role { font-size: 9.2px; color: #5a5a59; line-height: 1.4; }
+
+.nav { display: flex; flex-direction: column; gap: 4.6px; }
+.nav-item {
+  display: flex; align-items: center;
+  gap: 9.2px; padding: 6.9px;
+  border-radius: 4.6px;
+  font-size: 9.2px; font-weight: 500; color: #333;
+}
+.nav-item img { width: 13.9px; height: 13.9px; flex-shrink: 0; }
+.nav-item.active { background: #5769b1; color: #fff; }
+.nav-item:nth-child(1) { animation: slideRight 0.4s ease 0.42s both; }
+.nav-item:nth-child(2) { animation: slideRight 0.4s ease 0.50s both; }
+.nav-item:nth-child(3) { animation: slideRight 0.4s ease 0.58s both; }
+
+.logout {
+  display: flex; align-items: center;
+  gap: 9.2px; padding: 6.9px;
+  border-radius: 4.6px;
+  background: rgba(87,105,177,0.1);
+  font-size: 9.2px; font-weight: 500; color: #333;
+  animation: fadeIn 0.4s ease 0.75s both;
+}
+.logout img { width: 13.9px; height: 13.9px; }
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 13.9px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18.5px;
+  animation: fadeIn 0.4s ease 0.15s both;
+}
+.back-btn {
+  display: flex; align-items: center; gap: 9.2px;
+  font-size: 9.2px; font-weight: 500; color: #333;
+}
+.back-btn img { width: 13.9px; height: 13.9px; }
+.topbar-actions { display: flex; gap: 10.4px; align-items: center; }
+
+.btn-ghost {
+  display: flex; align-items: center; gap: 6.9px;
+  background: #fff; padding: 6.9px 13.9px;
+  border-radius: 57.7px;
+  font-size: 9.2px; font-weight: 500; color: #333;
+  animation: fadeIn 0.35s ease 0.28s both;
+}
+.btn-ghost img { width: 13.9px; height: 13.9px; }
+
+.btn-primary {
+  display: flex; align-items: center; gap: 6.9px;
+  background: #5769b1; padding: 6.9px 13.9px;
+  border-radius: 57.7px;
+  font-size: 9.2px; font-weight: 500; color: #fff;
+  animation: scaleIn 0.4s cubic-bezier(0.22,1,0.36,1) 0.38s both;
+}
+.btn-primary img { width: 13.9px; height: 13.9px; }
+
+.card {
+  background: #fff;
+  border-radius: 9.2px;
+  padding: 18.5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 13.9px;
+  overflow: hidden;
+  animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+
+.patient-name {
+  font-size: 13.9px; font-weight: 700; color: #333;
+  animation: fadeInUp 0.4s ease 0.4s both;
+}
+.patient-meta {
+  margin-top: 4.6px;
+  font-size: 9.2px; color: #5a5a59; line-height: 1.4;
+  animation: fadeInUp 0.4s ease 0.48s both;
+}
+.badges { display: flex; gap: 6.9px; margin-top: 9.2px; }
+.badge {
+  display: flex; align-items: center; gap: 5.8px;
+  background: #dcefe7; padding: 3.5px 9.2px;
+  border-radius: 57.7px;
+  font-size: 9.2px; font-weight: 500; color: #333;
+}
+.badge-dot {
+  width: 4.6px; height: 4.6px;
+  background: #57b18b; border-radius: 50%; flex-shrink: 0;
+}
+.badge:nth-child(1) { animation: badgePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.6s both; }
+.badge:nth-child(2) { animation: badgePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.7s both; }
+
+.divider {
+  height: 0.58px;
+  background: rgba(87,105,177,0.2);
+  transform-origin: left center;
+  animation: expandX 0.55s cubic-bezier(0.22,1,0.36,1) 0.75s both;
+}
+
+.notif-title {
+  font-size: 11.5px; font-weight: 500; color: #333;
+  animation: fadeIn 0.35s ease 0.82s both;
+}
+.notif-list { display: flex; flex-direction: column; gap: 6.9px; }
+
+.notif-row {
+  background: rgba(51,51,51,0.03);
+  border-radius: 4.6px; padding: 11.5px;
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 9.2px;
+}
+.notif-row:nth-child(1) { animation: rowFade 0.45s ease 0.88s both; }
+.notif-row:nth-child(2) { animation: rowFade 0.45s ease 1.00s both; }
+.notif-row:nth-child(3) { animation: rowFade 0.45s ease 1.12s both; }
+
+.notif-left { display: flex; gap: 9.2px; align-items: flex-start; }
+
+.check-filled {
+  width: 11.5px; height: 11.5px;
+  background: #5769b1; border-radius: 1.9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.check-filled svg { width: 7px; height: 7px; }
+.check-empty {
+  width: 11.5px; height: 11.5px;
+  border: 0.58px solid rgba(87,105,177,0.8);
+  border-radius: 1.9px; flex-shrink: 0; margin-top: 1px;
+}
+
+.notif-body { display: flex; flex-direction: column; gap: 9.2px; }
+.notif-label { font-size: 9.2px; font-weight: 500; color: #333; }
+.notif-tags { display: flex; align-items: center; gap: 9.2px; flex-wrap: wrap; }
+.tag { padding: 3.5px 6.9px; border-radius: 57.7px; font-size: 8.1px; font-weight: 500; }
+.tag-red    { background: #efdcdc; color: #6b3333; }
+.tag-yellow { background: #efecdc; color: #5d5018; }
+.tag-crit   { background: #b15757; color: #fff; }
+.tag-warn   { background: #baa63e; color: #fff; }
+.tag-plain  { font-size: 8.1px; color: #5a5a59; }
+.tag-plain strong { font-weight: 700; color: #5a5a59; }
+
+.notif-seen {
+  display: flex; align-items: center; gap: 4.6px;
+  font-size: 9.2px; color: #333;
+}
+.notif-seen img { width: 13.9px; height: 13.9px; }
+
+.notif-time {
+  display: flex; align-items: center; gap: 4.6px;
+  font-size: 8.1px; color: #5a5a59; white-space: nowrap; flex-shrink: 0;
+}
+.notif-time img { width: 9.2px; height: 9.2px; }
+</style>
+</head>
+<body>
+
+<div id="scaler">
+  <div class="frame-270">
+    <div class="inner-layout">
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div>
+          <div class="brand-row">
+            <div class="brand-icon">
+              <img src="https://www.figma.com/api/mcp/asset/2f3a3a63-96ef-46ba-9fb7-32d8618bae74" alt="">
+            </div>
+            <span class="brand-name">Caregiver Aware</span>
+          </div>
+          <div class="user-row">
+            <div class="avatar">JD</div>
+            <div>
+              <div class="user-name">Dr. Jane Davis</div>
+              <div class="user-role">Care Coordinator</div>
+            </div>
+          </div>
+          <nav class="nav">
+            <div class="nav-item active">
+              <img src="https://www.figma.com/api/mcp/asset/51cbab14-8ed2-4b91-b83e-37f4941239c7" alt="">
+              Dashboard
+            </div>
+            <div class="nav-item">
+              <img src="https://www.figma.com/api/mcp/asset/98449c72-91b4-42ee-80d7-6b91366ffe25" alt="">
+              Settings
+            </div>
+            <div class="nav-item">
+              <img src="https://www.figma.com/api/mcp/asset/75d83727-0dee-42d2-88ee-71902ce148e7" alt="">
+              Help
+            </div>
+          </nav>
+        </div>
+        <div class="logout">
+          <img src="https://www.figma.com/api/mcp/asset/72781633-6878-4524-bb55-fb24c6e83a93" alt="">
+          Log Out
+        </div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="main">
+        <div class="topbar">
+          <div class="back-btn">
+            <img src="https://www.figma.com/api/mcp/asset/534b8f36-1d32-4a98-8972-f060355c26c5" alt="">
+            Back to dashboard
+          </div>
+          <div class="topbar-actions">
+            <div class="btn-ghost">
+              <img src="https://www.figma.com/api/mcp/asset/ae8bd9fa-73c1-41f2-8678-c2fd2d9a6252" alt="">
+              Notes &amp; History
+            </div>
+            <div class="btn-primary">
+              <img src="https://www.figma.com/api/mcp/asset/22247a2f-eb77-490e-b081-fcc26f946e6c" alt="">
+              Edit Profile
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="patient-name">Robert Johnson</div>
+            <div class="patient-meta">
+              ID: 056865<br>
+              123 Birch Lane, Toronto, ON<br>
+              Jan 12, 1943 (82)
+            </div>
+            <div class="badges">
+              <div class="badge"><div class="badge-dot"></div> Stable</div>
+              <div class="badge"><div class="badge-dot"></div> Online</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="notif-title">Notifications</div>
+          <div class="notif-list">
+
+            <div class="notif-row">
+              <div class="notif-left">
+                <div class="check-filled">
+                  <svg viewBox="0 0 7 7" fill="none"><path d="M1 3.5l2 2 3-3" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="notif-body">
+                  <div class="notif-label">Morning Inactivity</div>
+                  <div class="notif-tags">
+                    <span class="tag tag-red">No morning activity</span>
+                    <span class="tag-plain">Usually wakes up at <strong>07:40</strong></span>
+                    <span class="tag tag-crit">Critical</span>
+                  </div>
+                  <div class="notif-seen">
+                    <img src="https://www.figma.com/api/mcp/asset/4be10a5e-cb69-4115-9b3f-8d35abb24dc7" alt="">
+                    Seen today, 2:45 PM by Nurse
+                  </div>
+                </div>
+              </div>
+              <div class="notif-time">
+                <img src="https://www.figma.com/api/mcp/asset/4e2d5fbd-19b0-4dc3-be31-4c95414ee713" alt="">
+                Today, 1:50 PM
+              </div>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-left">
+                <div class="check-empty"></div>
+                <div class="notif-body">
+                  <div class="notif-label">Increased Sleep Interruptions (1 Month)</div>
+                  <div class="notif-tags">
+                    <span class="tag tag-yellow">Sleep interruptions up 29%</span>
+                    <span class="tag-plain">1 month</span>
+                    <span class="tag tag-warn">Warning</span>
+                  </div>
+                </div>
+              </div>
+              <div class="notif-time">
+                <img src="https://www.figma.com/api/mcp/asset/117679bb-1625-4590-9df7-72c0e99538d8" alt="">
+                Today, 1:50 PM
+              </div>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-left">
+                <div class="check-empty"></div>
+                <div class="notif-body">
+                  <div class="notif-label">Reduced Bathing Frequency (1 Week)</div>
+                  <div class="notif-tags">
+                    <span class="tag tag-red">No bathing recorded for 3+ days</span>
+                    <span class="tag-plain">1 week</span>
+                    <span class="tag tag-crit">Critical</span>
+                  </div>
+                </div>
+              </div>
+              <div class="notif-time">
+                <img src="https://www.figma.com/api/mcp/asset/93e6d6fb-c9ce-4719-8579-8ec5990f8689" alt="">
+                Today, 12:50 PM
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const W = 800, H = 519;
+  const scaler = document.getElementById('scaler');
+
+  function fit() {
+    const vw = document.documentElement.clientWidth;
+    const vh = document.documentElement.clientHeight;
+    const scale = Math.min(vw / W, vh / H);
+    const x = (vw - W * scale) / 2;
+    const y = (vh - H * scale) / 2;
+    scaler.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+
+  fit();
+  new ResizeObserver(fit).observe(document.documentElement);
+</script>
+</body>
+</html>
